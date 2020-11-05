@@ -2,11 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Row, Col, Container } from "reactstrap";
-import Welcome from "./Welcome";
+import * as formMetaData from "../metadata/metaData";
+import * as fieldData from "../metadata/fieldData";
 import { setModuleLinks } from "./actions/moduleLinksActions";
 import { saveFavoriteLinks } from "./favoriteLinksActions";
 import { SearchBar } from "bsiuilib";
 import { tftools } from "../../base/constants/TFTools";
+import { ReusableModal, DynamicForm, FlyoutMenu } from "bsiuilib";
+import { setFormData } from "../actions/formActions";
+import { setFilterFormData } from "../actions/filterFormActions";
+import * as styles from "../../base/constants/AppConstants";
+import { getUsageData } from "../api/getUsageDataAPI";
+import autocompleteSelectAPI from "../api/autocompleteselectAPI";
+import savegriddataAPI from "../api/savegriddataAPI";
 
 class TFHome extends Component {
   constructor(props) {
@@ -52,25 +60,73 @@ class TFHome extends Component {
         }
       ]
     ];
+
+    this.handleClose = this.handleClose.bind(this);
+    this.toggle = this.toggle.bind(this);
+    this.renderApplication = this.renderApplication.bind(this);
+    this.renderMe = this.renderMe.bind(this);
   }
 
-  getJsonCallback() {
-    console.log(this.refs.formBuilder.getJson(data));
+  toggle(pageData) {
+    const { id, label } = pageData;
+    const payload = { data: {}, mode: "New" };
+    this.props.setFormData(payload);
+    this.setState({
+      isOpen: true,
+      pgid: id,
+      formTitle: label,
+      isfilterform: true
+    });
   }
 
-  renderApplication(data) {
+  handleClose() {
+    this.setState({ isOpen: false });
+  }
+
+  renderMe(pageId, values, filter) {
+    filter && this.props.setFilterFormData(values);
+    let data = tftools.find(tftool => tftool.id == pageId);
     renderTFApplication("pageContainer", data);
   }
 
+  renderApplication(data) {
+    const { id, value } = data;
+    if (!fieldData[id] || value !== "UQ" || id === "maritalStatusReport" || id === "paServicesTaxReport") {
+      this.renderMe(id);
+    } else {
+      this.toggle(data);
+    }
+  }
+
   getOptions() {
-    const excluededPages = ['testHarness', 'selectSamplePage', 'dateFieldDoc']
-    return tftools.filter(tool => !excluededPages.includes(tool.id));
+    const excluededPages = ["testHarness", "selectSamplePage", "dateFieldDoc"];
+    return tftools.filter(tool => !excluededPages.includes(tool.id)).sort(this.GetSortOrder("label"));
+  }
+
+  GetSortOrder(prop) {
+    return function (a, b) {
+      if (a[prop] > b[prop]) {
+        return 1;
+      } else if (a[prop] < b[prop]) {
+        return -1;
+      }
+      return 0;
+    };
   }
 
   render() {
+    const { isOpen, formTitle, isfilterform, pgid } = this.state;
+    const { formData } = this.props;
+    const formProps = {
+      close: this.handleClose,
+      pgid,
+      renderMe: this.renderMe,
+      filter: isfilterform
+    };
+
     return (
       <div style={{ marginTop: 0 }}>
-        <Container fluid style={{ overflowY: "auto" }}>
+        <Container fluid style={{ overflowY: "auto", minHeight: "calc(100vh - 75px)" }}>
           <SearchBar
             title="Reports"
             sectionLayout={this.sectionLayout}
@@ -79,10 +135,34 @@ class TFHome extends Component {
             setFavorite={this.props.saveFavoriteLinks}
             renderApplication={this.renderApplication}
           />
+
+          <ReusableModal open={isOpen} close={this.handleClose} title={formTitle} styles={styles}>
+            <DynamicForm
+              formData={formData}
+              formProps={formProps}
+              filter={false}
+              isfilterform={isfilterform}
+              tftools={tftools.sort(this.GetSortOrder("label"))}
+              formMetaData={formMetaData[pgid]}
+              fieldData={fieldData[pgid]}
+              recentUsage={getUsageData}
+              autoComplete={autocompleteSelectAPI}
+              saveGridData={savegriddataAPI}
+              styles={styles}
+            />
+          </ReusableModal>
+
           <Row>
             <Col>
               <div id="pageContainer" className="container w-100 pl-5 pr-5" style={{ maxWidth: "100%" }}>
-                <Welcome sectionLayout={this.sectionLayout} />
+                <FlyoutMenu
+                  favorites={this.props.favorites}
+                  options={tftools}
+                  showSideMenu={false}
+                  setFavorite={this.props.saveFavoriteLinks}
+                  renderApplication={this.renderApplication}
+                  sectionLayout={this.sectionLayout}
+                />
               </div>
             </Col>
           </Row>
@@ -93,10 +173,11 @@ class TFHome extends Component {
 }
 function mapStateToProps(state) {
   return {
+    formData: state.formData,
     favorites: state.favoriteLinks.filter(opt => opt.id !== "testHarness")
   };
 }
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ setModuleLinks, saveFavoriteLinks }, dispatch);
+  return bindActionCreators({ setModuleLinks, saveFavoriteLinks, setFilterFormData, setFormData }, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TFHome);
