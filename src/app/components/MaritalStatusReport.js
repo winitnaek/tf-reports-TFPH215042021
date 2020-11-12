@@ -104,7 +104,7 @@ class MaritalStatusReport extends Component {
         {url && (<Form style={{
                       display: 'flex',
                       margin: '0 auto',
-                      width: '70%',
+                      width: '90%',
                       flexWrap: 'wrap'
                     }}>
           <Col>
@@ -142,7 +142,7 @@ class MaritalStatusReport extends Component {
               filter={true}
               isfilterform={false}
               tftools={tftools}
-              formMetaData={metaData[pgid]}
+              metadata={metaData[pgid]}
               fieldData={fieldData[pgid]}
               formHandlerService={generateReportApi}
               styles={styles}

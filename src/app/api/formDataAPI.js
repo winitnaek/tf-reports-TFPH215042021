@@ -1,8 +1,8 @@
 import { appError, getAdminErrorMessage } from "bsiuilib";
 import { autocompleteURL, reqInfo, buildAutoCompSelInput } from "../../base/utils/tfUtils";
 import store from "../../tf_reports";
-class autocompleteSelectAPI {
-  static getAutoCompleteData(fieldId, query, formValues = {}) {
+class formDataAPI {
+  static getFormData(fieldId, query, formValues = {}) {
     let autoCompInput = buildAutoCompSelInput(fieldId, store, query, formValues);
     let url = autocompleteURL(fieldId);
     let tt = JSON.stringify(autoCompInput);
@@ -29,7 +29,7 @@ class autocompleteSelectAPI {
   }
 }
 
-export default autocompleteSelectAPI;
+export default formDataAPI;
 
 export const mockData = {
   "1- Subtract Deduction Flat Amount": data => data.slice(0, 5),

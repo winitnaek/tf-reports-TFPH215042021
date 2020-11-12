@@ -6,14 +6,14 @@ import * as formMetaData from "../metadata/metaData";
 import * as fieldData from "../metadata/fieldData";
 import { setModuleLinks } from "./actions/moduleLinksActions";
 import { saveFavoriteLinks } from "./favoriteLinksActions";
-import { SearchBar } from "bsiuilib";
 import { tftools } from "../../base/constants/TFTools";
-import { ReusableModal, DynamicForm, FlyoutMenu } from "bsiuilib";
+import { formatFieldData } from "../../base/utils/tfUtils";
+import { ReusableModal, DynamicForm, FlyoutMenu, SearchBar } from "bsiuilib";
 import { setFormData } from "../actions/formActions";
 import { setFilterFormData } from "../actions/filterFormActions";
 import * as styles from "../../base/constants/AppConstants";
 import { getUsageData } from "../api/getUsageDataAPI";
-import autocompleteSelectAPI from "../api/autocompleteselectAPI";
+import formDataAPI from "../api/formDataAPI";
 import savegriddataAPI from "../api/savegriddataAPI";
 
 class TFHome extends Component {
@@ -124,6 +124,8 @@ class TFHome extends Component {
       filter: isfilterform
     };
 
+    const fieldDataX = formatFieldData(fieldData[pgid], pgid, appUserId());
+
     return (
       <div style={{ marginTop: 0 }}>
         <Container fluid style={{ overflowY: "auto", minHeight: "calc(100vh - 75px)" }}>
@@ -143,10 +145,10 @@ class TFHome extends Component {
               filter={false}
               isfilterform={isfilterform}
               tftools={tftools.sort(this.GetSortOrder("label"))}
-              formMetaData={formMetaData[pgid]}
-              fieldData={fieldData[pgid]}
+              metadata={formMetaData[pgid]}
+              fieldData={fieldDataX}
               recentUsage={getUsageData}
-              autoComplete={autocompleteSelectAPI}
+              getFormData={formDataAPI}
               saveGridData={savegriddataAPI}
               styles={styles}
             />

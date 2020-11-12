@@ -16,7 +16,7 @@ import { ReusableModal } from "bsiuilib";
 import { DynamicForm } from "bsiuilib";
 
 import { getRecentUsage } from "../actions/usageActions";
-import autocompleteSelectAPI from "../api/autocompleteselectAPI";
+import formDataAPI from "../api/formDataAPI";
 import savegriddataAPI from "../api/savegriddataAPI";
 import GeneralApi from "../api/generalApi";
 import { setFilterFormData } from "../actions/filterFormActions";
@@ -96,10 +96,10 @@ class MappingTools extends UserDataQueries {
             filter={filter}
             isfilterform={this.state.isfilterform}
             tftools={tftools}
-            formMetaData={formMetaData[pgid]}
+            metadata={formMetaData[pgid]}
             fieldData={fieldData[pgid]}
             recentUsage={getRecentUsage}
-            autoComplete={autocompleteSelectAPI}
+            autoComplete={formDataAPI}
             saveGridData={savegriddataAPI}
             styles={styles}
           />

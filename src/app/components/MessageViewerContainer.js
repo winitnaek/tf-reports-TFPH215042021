@@ -9,7 +9,7 @@ import MessageViewer from "./MessageViewer";
 import savegriddataAPI from "../api/savegriddataAPI";
 import deletegriddataAPI from "../api/deletegriddataAPI";
 import { getUsageData } from "../api/getUsageDataAPI";
-import autocompleteSelectAPI from "../api/autocompleteselectAPI";
+import formDataAPI from "../api/formDataAPI";
 import mappingToolUsageAPI from "../api/mappingToolUsageAPI";
 
 class MessageViewerContainer extends Component {
@@ -24,7 +24,7 @@ class MessageViewerContainer extends Component {
         tftools={tftools}
         saveGridData={savegriddataAPI}
         deleteGridData={deletegriddataAPI}
-        autoComplete={autocompleteSelectAPI}
+        autoComplete={formDataAPI}
         mapToolUsage={mappingToolUsageAPI}
         recentUsage={getUsageData}
         renderGrid={this.renderGrid}

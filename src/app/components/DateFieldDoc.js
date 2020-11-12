@@ -11,10 +11,11 @@ import { ReusableModal } from "bsiuilib";
 import { DynamicForm } from "bsiuilib";
 
 //import { getRecentUsage } from "../actions/usageActions";
-import {getUsageData} from "../api/getUsageDataAPI";
-import autocompleteSelectAPI from "../api/autocompleteselectAPI";
+import { getUsageData } from "../api/getUsageDataAPI";
 import savegriddataAPI from "../api/savegriddataAPI";
 import { setFilterFormData } from "../actions/filterFormActions";
+import formDataAPI from "../api/formDataAPI";
+import metadata from "../metadata/_metaData";
 
 const sampleDateFields = "sampleDateFields";
 
@@ -38,7 +39,7 @@ class DateFieldDoc extends React.Component {
 
     this.renderMe = (pgid, values, filter) => {
       filter && this.props.setFilterFormData(values);
-      let data = tftools.filter((tftool) => {
+      let data = tftools.filter(tftool => {
         if (tftool.id == pgid) return tftool;
       });
       renderTFApplication("pageContainer", data[0]);
@@ -87,11 +88,7 @@ class DateFieldDoc extends React.Component {
           <span style={{ marginLeft: "10px" }}>
             <span id="help">
               <span>
-                <i
-                  className="fas fa-question-circle  fa-lg"
-                  onClick={this.OpenHelp}
-                  style={styles.helpicon}
-                />
+                <i className="fas fa-question-circle  fa-lg" onClick={this.OpenHelp} style={styles.helpicon} />
               </span>
             </span>
             <UncontrolledTooltip placement="right" target="help">
@@ -102,12 +99,7 @@ class DateFieldDoc extends React.Component {
         <Row>
           <Col>
             <h3>
-              <Button
-                color="link"
-                onClick={() =>
-                  this.toggle(sampleDateFields, "Sample Date Fields")
-                }
-              >
+              <Button color="link" onClick={() => this.toggle(sampleDateFields, "Sample Date Fields")}>
                 Sample Date Fields
               </Button>
             </h3>
@@ -127,10 +119,10 @@ class DateFieldDoc extends React.Component {
             filter={filter}
             isfilterform={this.state.isfilterform}
             tftools={tftools}
-            formMetaData={formMetaData[pgid]}
+            metadata={metadata[pgid]}
             fieldData={fieldData[pgid]}
             recentUsage={getUsageData}
-            autoComplete={autocompleteSelectAPI}
+            getFormData={formDataAPI}
             saveGridData={savegriddataAPI}
             styles={styles}
           />
@@ -148,10 +140,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    { closeForm, setFormData,setFilterFormData },
-    dispatch
-  );
+  return bindActionCreators({ closeForm, setFormData, setFilterFormData }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DateFieldDoc);

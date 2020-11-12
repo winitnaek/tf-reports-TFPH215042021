@@ -121,20 +121,18 @@ function renderMessageViewer(elem, pageid, pid) {
     setFilterFormData,
     renderGrid: renderTFApplication
   };
-
-  const formMetaData = compMetaData(pageid);
-
+  const metadata = compMetaData(pageid);
   ReactDOM.render(
     <Provider store={store}>
           <MessageViewerContainer
             pageid={pageid}
-            metadata={compMetaData}
+            metadata={metadata}
             pid={pid}
             permissions={compPermissions}
             help={openHelp}
             gridProps={gridProps}
             fieldData={fieldDataX}
-            formMetaData={formMetaData}
+            formMetaData={metadata}
             getGridData={griddataAPI.getGridData}
             gridInput={gridInput}
           />
@@ -187,28 +185,26 @@ function renderComponent(elem, pageid, pid) {
               griddatanew.map((data, key) => (
                 <CustomGrid
                   pageid={pageid}
-                  metadata={() => compMetaData(pageid, key)}
+                  metadata={compMetaData(pageid, key)}
                   pid={pid}
                   permissions={compPermissions}
                   griddata={data}
                   help={openHelp}
                   gridProps={gridProps}
                   fieldData={fieldDataX}
-                  formMetaData={compMetaData(pageid, key)}
                   className={key !== 0 ? 'mt-3' : '' }
                 />
               ))
             ) : (
               <CustomGrid
                 pageid={pageid}
-                metadata={compMetaData}
+                metadata={compMetaData(pageid)}
                 pid={pid}
                 permissions={compPermissions}
                 griddata={griddatanew}
                 help={openHelp}
                 gridProps={gridProps}
                 fieldData={fieldDataX}
-                formMetaData={compMetaData(pageid)}
               />
             )}
           </Fragment>
