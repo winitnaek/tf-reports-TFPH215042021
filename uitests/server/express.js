@@ -17,8 +17,8 @@ const put = 'PUT';
  */
 const host  = 'http://ssqa01:'; // REST Web Service HOST 
 const port  = '1900';            // REST Web Service PORT
-const username = 'WSUSERXXX';  // REST Web Service USER
-const password = 'WSUSERXXX';  // REST Web Service PASS
+const username = 'CFWSUSER';  // REST Web Service USER
+const password = 'bsi';  // REST Web Service PASS
 /**
  * approuter
  * @param {*} app 
