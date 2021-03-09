@@ -3,9 +3,9 @@
     "name": "TaxFactory",
     "desc": "Tax Factory Reports",
     "badge": "tf",
-    "bundleName": "tfReports.js",
+    "bundleName": "tfReportsBundle.js",
     "version": "1",
-    "buildNo":"2020_11_03_TR",
+    "buildNo":"2021_03_09_TR",
     "renderFunction": "renderTFApplication",
     "macVersion":"1.0", 
     "areas": [ {

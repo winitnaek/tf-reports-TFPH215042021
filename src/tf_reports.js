@@ -71,7 +71,7 @@ function renderTFApplication(elem, renderName, renderCtx) {
   setAppUserIDAndDataset(dataset, userId);
   if (renderName === rname.RN_TF_HOME) {
     showPrgress(elem);
-    store.dispatch(setModuleAreas(moduleAreas));
+    //store.dispatch(setModuleAreas(moduleAreas));
     store.dispatch(getFavoriteLinks(userId,1));
     setTimeout(
       function () {

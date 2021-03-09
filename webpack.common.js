@@ -15,7 +15,7 @@ module.exports = {
     APP_DIR + "/tf_reports.js" // Your appʼs entry point
   ],
   output: {
-    filename: "tfReports.js",
+    filename: "tfReportsBundle.js",
     path: path.resolve(__dirname, "dist"),
     publicPath: "/"
   },
