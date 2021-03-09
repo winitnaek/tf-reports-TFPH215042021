@@ -14,7 +14,7 @@ import TestHarness from "./app/test/TestHarness";
 import CustomComp from "./app/components/CustomComp";
 import MessageViewerContainer from "./app/components/MessageViewerContainer";
 import * as fieldData from "./app/metadata/fieldData";
-
+import { getFavoriteLinks } from "./app/home/actions/favoriteLinksActions";
 let store = configureStore();
 export default store;
 let MOCK = process.env.NODE_ENV === "development" ? false : false;
@@ -72,6 +72,7 @@ function renderTFApplication(elem, renderName, renderCtx) {
   if (renderName === rname.RN_TF_HOME) {
     showPrgress(elem);
     store.dispatch(setModuleAreas(moduleAreas));
+    store.dispatch(getFavoriteLinks(userId,1));
     setTimeout(
       function () {
         renderTFHome(elem);

@@ -15,7 +15,7 @@ import * as styles from "../../base/constants/AppConstants";
 import { getUsageData } from "../api/getUsageDataAPI";
 import formDataAPI from "../api/formDataAPI";
 import savegriddataAPI from "../api/savegriddataAPI";
-
+import {setUnSetFavorite} from "../home/actions/favoriteUtil";
 class TFHome extends Component {
   constructor(props) {
     super(props);
@@ -65,6 +65,7 @@ class TFHome extends Component {
     this.toggle = this.toggle.bind(this);
     this.renderApplication = this.renderApplication.bind(this);
     this.renderMe = this.renderMe.bind(this);
+    this.setFavorite = this.setFavorite.bind(this);
   }
 
   toggle(pageData) {
@@ -97,7 +98,15 @@ class TFHome extends Component {
       this.toggle(data);
     }
   }
-
+  /**
+   * setFavorite
+   * @param {*} favorites 
+   * @param {*} selectedFavorite 
+   * @param {*} action 
+   */
+  setFavorite(favorites, selectedFavorite, action) {
+    setUnSetFavorite(favorites, selectedFavorite, action);
+  }
   getOptions() {
     const excluededPages = ["testHarness", "selectSamplePage", "dateFieldDoc"];
     return tftools.filter(tool => !excluededPages.includes(tool.id)).sort(this.GetSortOrder("label"));
@@ -134,7 +143,7 @@ class TFHome extends Component {
             sectionLayout={this.sectionLayout}
             options={this.getOptions()}
             favorites={this.props.favorites}
-            setFavorite={this.props.saveFavoriteLinks}
+            setFavorite={this.setFavorite}
             renderApplication={this.renderApplication}
           />
 
@@ -161,7 +170,7 @@ class TFHome extends Component {
                   favorites={this.props.favorites}
                   options={tftools}
                   showSideMenu={false}
-                  setFavorite={this.props.saveFavoriteLinks}
+                  setFavorite={this.setFavorite}
                   renderApplication={this.renderApplication}
                   sectionLayout={this.sectionLayout}
                 />
