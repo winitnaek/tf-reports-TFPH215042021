@@ -37,7 +37,7 @@ export const tftools = [
     sid:"UQ"
   },
   {
-    value: 'WOF',
+    value: 'WQF',
     label: 'U.S. WageAttachment QuickFormulas',
     desc: 'U.S. WageAttachment QuickFormulas',
     id: 'USWageAttachmentQuickFormulas',
