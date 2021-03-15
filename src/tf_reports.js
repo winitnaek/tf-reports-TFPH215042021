@@ -37,8 +37,7 @@ import { UI_COMP, UI_PAGE, UI_TEST, tftools } from "./base/constants/TFTools";
 import griddataAPI from "./app/api/griddataAPI";
 //Temporary set user in session:======Comment this when deployed with MAC======
 if (!sessionStorage.getItem("up")) {
-  var userProfile =
-    '{"userId":"vinit","firstName":"Vinit","lastName":"Naik","dataset":"VINIT","securitytokn":"fhfh484jer843je848rj393jf","branding":"base64ImageData","userTheme":"Default","roles":["ER"],"applications":[{"id":"73b9a516-c0ca-43c0-b0ae-190e08d77bcc","name":"TFTools","accessIds":[{"id":"162ebe14-8d87-44e1-a786-c9365c9d5cd8","visible":true}],"permissions":{"CF":[1,1,1,1,0],"CT":[1,1,1,1,0],"CP":[1,1,1,1,0],"AO":[1,1,1,1,0],"CO":[1,1,1,1,0],"OO":[1,1,1,1,0],"EG":[1,1,1,1,0],"UQ":[1,1,1,1,0],"GG":[1,1,1,1,0],"GC":[1,1,1,1,0],"UO":[1,1,1,1,0],"CG":[1,1,1,1,0],"TR":[1,1,1,1,0],"MR":[1,1,1,1,0],"MT":[1,1,1,1,0],"TEDO":[1,1,1,1,0], "BT":[1,1,1,1,0],"MS":[1,1,1,1,0],"LI":[1,1,1,1,0]}}],"themeList":[{"id":"Default","name":"Default"},{"id":"HighContrast","name":"High Contrast"},{"id":"WhiteOnBlack","name":"White On Black"},{"id":"BlackOnWhite","name":"Black On White"}]}';
+  var userProfile = '{"userId":"vinit","dataset":"VINIT","securitytokn":"6d976b4e3ef843119dc1b66017160837","branding":"base64ImageData","userTheme":"Default","roles":["ER"],"applications":[{"id":"73b9a516-c0ca-43c0-b0ae-190e08d77bcc","name":"TaxFactory","accessIds":[{"id":"162ebe14-8d87-44e1-a786-c9365c9d5cd8","visible":true}],"permissions":{"UQ":[1,1,1,1,0],"MS":[1,1,1,1,0],"QF":[1,1,1,1,0],"PQF":[1,1,1,1,0],"WQF":[1,1,1,1,0],"TH":[1,1,1,1,0],"TR":[1,1,1,1,0],"PA":[1,1,1,1,0]}}],"themeList":[{"id":"Default","name":"Default"},{"id":"HighContrast","name":"HighContrast"},{"id":"WhiteOnBlack","name":"WhiteOnBlack"},{"id":"BlackOnWhite","name":"BlackOnWhite"}]}';
   var userdata = JSON.parse(userProfile);
   if (isMock()) {
     let thPerm = [1, 1, 1, 1, 0];
@@ -349,42 +348,11 @@ function setAppUserIDAndDataset(dataset, userid) {
   APP_DATASET = dataset;
   APP_USERID = userid;
 }
-var CP_RIGHTS, CT_RIGHTS, CF_RIGHTS, CFC_RIGHTS, WS_RIGHTS, UQ_RIGHTS, ALL_RIGHTS;
-function setCPRights(perm) {
-  CP_RIGHTS = setPerms(perm);
-}
-function hasCPRights() {
-  return CP_RIGHTS;
-}
-function setCTRights(perm) {
-  CT_RIGHTS = setPerms(perm);
-}
-function hasCTRights() {
-  return CT_RIGHTS;
-}
-function setCFRights(perm) {
-  CF_RIGHTS = setPerms(perm);
-}
-function hasCFRights() {
-  return CF_RIGHTS;
-}
-function setCFCRights(perm) {
-  CF_RIGHTS = setPerms(perm);
-}
-function hasCFCRights() {
-  return CF_RIGHTS;
-}
-function setWSRights(perm) {
-  WS_RIGHTS = setPerms(perm);
-}
-
-function hasWSRights() {
-  return WS_RIGHTS;
-}
+//************Right & Permissions******************/
+var UQ_RIGHTS, ALL_RIGHTS, MS_RIGHTS, QF_RIGHTS, WQF_RIGHTS, PQF_RIGHTS, TH_RIGHTS,TR_RIGHTS,PA_RIGHTS;
 function setUQRights(perm) {
   UQ_RIGHTS = setPerms(perm);
 }
-
 function hasUQRights() {
   return UQ_RIGHTS;
 }
@@ -394,16 +362,62 @@ function setAlRights(perm) {
 function getAllRights() {
   return ALL_RIGHTS;
 }
+function setMSRights(perm) {
+  MS_RIGHTS = setPerms(perm);
+}
+function hasMSRights() {
+  return MS_RIGHTS;
+}
+function setQFRights(perm) {
+  QF_RIGHTS = setPerms(perm);
+}
+function hasQFRights() {
+  return QF_RIGHTS;
+}
+function setWQFRights(perm) {
+  WQF_RIGHTS = setPerms(perm);
+}
+function hasWQFRights() {
+  return WQF_RIGHTS;
+}
+function setPQFRights(perm) {
+  PQF_RIGHTS = setPerms(perm);
+}
+function hasPQFRights() {
+  return PQF_RIGHTS;
+}
+function setTHRights(perm) {
+  TH_RIGHTS = setPerms(perm);
+}
+function hasTHRights() {
+  return TH_RIGHTS;
+}
+function setTRRights(perm) {
+  TR_RIGHTS = setPerms(perm);
+}
+function hasTRRights() {
+  return TR_RIGHTS;
+}
+function setPARights(perm) {
+  PA_RIGHTS = setPerms(perm);
+}
+function hasPARights() {
+  return PA_RIGHTS;
+}
+//************Right & Permissions******************/
 function setModulePermissions(apps) {
   apps.forEach(function (app) {
     if (app.id == "73b9a516-c0ca-43c0-b0ae-190e08d77bcc") {
       app.accessIds.forEach(function (access) {
         if (access.id == "162ebe14-8d87-44e1-a786-c9365c9d5cd8" && access.visible == true) {
-          // setCPRights(app.permissions.CP);
-          // setCTRights(app.permissions.CT);
-          // setCFRights(app.permissions.CF)
-          // setUQRights(app.permissions.UQ);
-          setWSRights(app.permissions);
+          setUQRights(app.permissions.UQ);
+          setMSRights(app.permissions.MS);
+          setQFRights(app.permissions.QF);
+          setTHRights(app.permissions.TH);
+          setTRRights(app.permissions.TR);
+          setPARights(app.permissions.PA);
+          setPQFRights(app.permissions.PQF);
+          setWQFRights(app.permissions.WQF);
           setAlRights(app.permissions);
         }
       });
@@ -525,22 +539,34 @@ window.appUserId = appUserId;
 
 module.exports = appAnchor;
 window.appAnchor = appAnchor;
-
-module.exports = hasCPRights;
-window.hasCPRights = hasCPRights;
-
-module.exports = hasCTRights;
-window.hasCTRights = hasCTRights;
-
-module.exports = hasCFRights;
-window.hasCFRights = hasCFRights;
-
+//************Right & Permissions******************/
 module.exports = hasUQRights;
 window.hasUQRights = hasUQRights;
 
 module.exports = getAllRights;
 window.getAllRights = getAllRights;
 
+module.exports = hasMSRights;
+window.hasMSRights = hasMSRights;
+
+module.exports = hasQFRights;
+window.hasQFRights = hasQFRights;
+
+module.exports = hasPQFRights;
+window.hasPQFRights = hasPQFRights;
+
+module.exports = hasWQFRights;
+window.hasWQFRights = hasWQFRights;
+
+module.exports = hasTHRights;
+window.hasTHRights = hasTHRights;
+
+module.exports = hasTRRights;
+window.hasTRRights = hasTRRights;
+
+module.exports = hasPARights;
+window.hasPARights = hasPARights;
+//************Right & Permissions******************/
 module.exports = onloadPdfData;
 window.onloadPdfData = onloadPdfData;
 

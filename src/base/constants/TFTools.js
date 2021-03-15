@@ -10,7 +10,7 @@ export const UI_EXTN = 'externallink';
 export const tftools = [
   ...tfScreens,
   {
-    value: 'UQ',
+    value: 'QF',
     label: 'U.S. QuickFormulas',
     desc: 'U.S. QuickFormulas',
     id: 'USQuickFormulas',
@@ -19,10 +19,12 @@ export const tftools = [
     href:"https://mybsiconnect.force.com/CustomLogin?startURL=%2Fpage_quickForms2%3Fd",
     section:'formulas',
     linkid:17,
-    module:1
+    module:1,
+    sid:"UQ"
+
   },
   {
-    value: 'UQ',
+    value: 'PQF',
     label: 'U.S. Pension QuickFormulas',
     desc: 'U.S. Pension QuickFormulas',
     id: 'USPensionQuickFormulas',
@@ -31,10 +33,11 @@ export const tftools = [
     href:"https://mybsiconnect.force.com/CustomLogin?startURL=%2Fpage_quickForms2%3Fdirect%3Dwspenqf%252Fversion%252F10",
     section:'formulas',
     linkid:18,
-    module:1
+    module:1,
+    sid:"UQ"
   },
   {
-    value: 'UQ',
+    value: 'WOF',
     label: 'U.S. WageAttachment QuickFormulas',
     desc: 'U.S. WageAttachment QuickFormulas',
     id: 'USWageAttachmentQuickFormulas',
@@ -43,7 +46,8 @@ export const tftools = [
     href:"https://mybsiconnect.force.com/CustomLogin?startURL=%2Fpage_quickForms2%3Fdirect%3Dwswagqf%252Fversion%252F10",
     section:'formulas',
     linkid:55,
-    module:1
+    module:1,
+    sid:"UQ"
   }
 ];
 
