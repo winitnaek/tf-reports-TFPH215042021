@@ -445,6 +445,15 @@ export function buildAutoCompSelInput(pageid, store, patten, formValues = {}) {
     userId: appUserId(),
     pattern: patten
   };
+  let additionalFields = {}
+  if (pageid === 'formula' && formValues) {
+    additionalFields = {
+      startdate: formValues.startdate ? moment(formValues.startdate).format("MM/DD/YYYY") : moment().format("MM/DD/YYYY"),
+      taxCode: formValues['taxCode'].id,
+      taxType: formValues['taxType'].id
+    }
+    return Object.assign(input, additionalFields);
+  }
   return input;
   //return Object.assign(input, formValues);
 }
