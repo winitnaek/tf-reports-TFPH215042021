@@ -108,13 +108,33 @@ class TFHome extends Component {
     setUnSetFavorite(favorites, selectedFavorite, action);
   }
   getOptions() {
-    const excluededPages = ["testHarness", "selectSamplePage", "dateFieldDoc"];
+    let excluededPages = ["testHarness", "selectSamplePage", "dateFieldDoc"];
     let perms = getAllRights();
-    return tftools.filter(tool => !excluededPages.includes(tool.id) && perms[tool.value] && perms[tool.value][0]===1).sort(this.GetSortOrder("label"));
+    let hasMS = hasMSRights();
+    let tools;
+    if(perms && hasMS && hasMS.VIEW === false){
+      excluededPages.push('maritalStatus');
+      excluededPages.push('maritalStatusReport');
+      tools = tftools.filter(tool => !excluededPages.includes(tool.id) && perms[tool.value] && perms[tool.value][0]===1).sort(this.GetSortOrder("label"));
+    }else{
+      tools = tftools.filter(tool => !excluededPages.includes(tool.id) && perms[tool.value] && perms[tool.value][0]===1).sort(this.GetSortOrder("label"));
+    }
+    return tools;
   }
   getTFTools() {
     let perms = getAllRights();
-    return tftools.filter(tool => perms[tool.value] && perms[tool.value][0]===1).sort(this.GetSortOrder("label"));
+    let hasMS = hasMSRights();
+    let excluededPages = [];
+    let tools;
+    if(perms && hasMS && hasMS.VIEW === false){
+      excluededPages.push('maritalStatus');
+      excluededPages.push('maritalStatusReport');
+      tools = tftools.filter(tool => !excluededPages.includes(tool.id) && perms[tool.value] && perms[tool.value][0]===1).sort(this.GetSortOrder("label"));
+    }else{
+      tools = tftools.filter(tool => perms[tool.value] && perms[tool.value][0]===1).sort(this.GetSortOrder("label"));
+    }
+    return tools;
+    return 
   }
   GetSortOrder(prop) {
     return function (a, b) {
